@@ -8,4 +8,4 @@
  * @param {Array<Array<any>} a 二次元配列
  * @return {Array<Array<any>} 転置された二次元配列
  */
-function transpose(a) { console.log( a[0].map((_, c) => a.map(r => r[c])) )};
+function transpose(a) { return a[0].map((_, c) => a.map(r => r[c])) };
