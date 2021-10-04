@@ -6,9 +6,29 @@
 /**
  * 二次元配列を転置する関数
  * @param {Array<Array<any>>} a 二次元配列
- * @return {Array<Array<any>>} 転置された二次元配列
+ * @returns {Array<Array<any>>} 転置された二次元配列
  */
 function transpose(a) { return a[0].map((_, c) => a.map(r => r[c])) };
+
+
+/**
+ * 
+ * @param {Object} fn 
+ * @param {String} logLevel ログレベル（log, info, warn error)の何かを入れる
+ * ※デフォルトはlog
+ * @returns fnのリターンを返す
+ */
+function logWrapper(fn=test, logLevel='log') {
+    console[logLevel]( {function: fn.name, status: 'run'} );
+    try{ 
+        const result = fn();
+    } catch(error) {
+        console[logLevel]( {function: fn.name, status: 'error'} );
+        throw new Error(error);
+    }
+    console[logLevel]( {function: fn.name, status: 'success'} );
+    return result;
+}
 
 
 /**
