@@ -26,7 +26,7 @@ function logWrapper(fn=test, logLevel='log') {
         console[logLevel]( {function: fn.name, status: 'error'} );
         throw new Error(error);
     }
-    console[logLevel]( {function: fn.name, status: 'success'} );
+    console[logLevel]( {function: fn.name, status: 'success', result: result} );
     return result;
 }
 
