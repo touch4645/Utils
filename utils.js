@@ -3,6 +3,7 @@
  * 各スクリプト特有のビジネスロジックは含めないよう心がけてください。 
  */
 
+
 /**
  * 二次元配列を転置する関数
  * @param {Array<Array<any>>} a 二次元配列
@@ -12,19 +13,32 @@ function transpose(a) { return a[0].map((_, c) => a.map(r => r[c])) };
 
 
 /**
- * 
+ * エラー詳細を作成する関数
+ * @param {Object} error エラーオブジェクト 
+ * @returns {String} エラー詳細の文字列
+ */
+function printError(error){
+    return "[名前] " + error.name + "\n" +
+        "[場所] " + error.fileName + "(" + error.lineNumber + "行目)\n" +
+        "[メッセージ]" + error.message + "\n" +      
+        "[StackTrace]\n" + error.stack;
+}
+
+
+/**
+ * 関数実行のログを出力するラッパー関数
  * @param {Object} fn 
  * @param {String} logLevel ログレベル（log, info, warn error)の何かを入れる
  * ※デフォルトはlog
- * @returns fnのリターンを返す
+ * @returns fnのリターンを返す（エラーの場合はエラー詳細をスルーする）
  */
 function logWrapper(fn=test, logLevel='log') {
     console[logLevel]( {function: fn.name, status: 'run'} );
     try{ 
         const result = fn();
     } catch(error) {
-        console[logLevel]( {function: fn.name, status: 'error'} );
-        throw new Error(error);
+        console[logLevel]( {function: fn.name, status: 'error', result: printError(error)} );
+        throw new Error(printError(error));
     }
     console[logLevel]( {function: fn.name, status: 'success', result: result} );
     return result;
