@@ -36,12 +36,12 @@ function logWrapper(fn=test, logLevel='log') {
     console[logLevel]( {function: fn.name, status: 'run'} );
     try{ 
         const result = fn();
+        console[logLevel]( {function: fn.name, status: 'success', result: result} );
+        return result;
     } catch(error) {
         console[logLevel]( {function: fn.name, status: 'error', result: printError(error)} );
         throw new Error(printError(error));
     }
-    console[logLevel]( {function: fn.name, status: 'success', result: result} );
-    return result;
 }
 
 
