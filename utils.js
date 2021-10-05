@@ -6,10 +6,10 @@
 
 /**
  * 二次元配列を転置する関数
- * @param {Array<Array<any>>} a 二次元配列
+ * @param {Array<Array<any>>} array 二次元配列
  * @returns {Array<Array<any>>} 転置された二次元配列
  */
-function transpose(a) { return a[0].map((_, c) => a.map(r => r[c])) };
+function transpose(array) { return array[0].map((_, c) => array.map(r => r[c])) };
 
 
 /**
@@ -32,7 +32,7 @@ function printError(error){
  * ※デフォルトはlog
  * @returns fnのリターンを返す（エラーの場合はエラー詳細をスルーする）
  */
-function logWrapper(fn=test, logLevel='log') {
+function logWrapper(fn, logLevel='log') {
     console[logLevel]( {function: fn.name, status: 'run'} );
     try{ 
         const result = fn();
