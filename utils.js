@@ -27,15 +27,16 @@ function printError(error){
 
 /**
  * 関数実行のログを出力するラッパー関数
- * @param {Object} fn 
+ * @param {Object} fn ラッピングする関数
  * @param {String} logLevel ログレベル（log, info, warn error)の何かを入れる
  * ※デフォルトはlog
+ * @param  {...any} args 
  * @returns fnのリターンを返す（エラーの場合はエラー詳細をスルーする）
  */
-function logWrapper(fn, logLevel='log') {
+function logWrapper(fn, logLevel='log', ...args) {
     console[logLevel]( {function: fn.name, status: 'run'} );
     try{ 
-        const result = fn();
+        const result = fn.apply(this, args);
         console[logLevel]( {function: fn.name, status: 'success', result: result} );
         return result;
     } catch(error) {
