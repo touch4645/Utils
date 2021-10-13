@@ -30,7 +30,7 @@ function printError(error){
  * @param {Object} fn ラッピングする関数
  * @param {String} logLevel ログレベル（log, info, warn error)の何かを入れる
  * ※デフォルトはlog
- * @param  {...any} args 
+ * @param  {...any} args fnの引数
  * @returns fnのリターンを返す（エラーの場合はエラー詳細をスルーする）
  */
 function logWrapper(fn, logLevel='log', ...args) {
@@ -74,4 +74,17 @@ function testDoGet(queries) {
 
     var response = UrlFetchApp.fetch(url, options);
     return {"url": url, "response": response};
+}
+
+
+/**
+ * データが入っている要素の最終行を取得（空白処理をスルーする）
+ * @param {Object} sheet SpreadsheetAppで取得されるSheetクラス
+ * @param {Number} column sheetで最終行を取得したい行の行番号
+ * @returns 空白を除いた最終行
+ */
+function getLastRow(sheet, column) {
+    const values = sheet.getRange(1, column, sheet.getLastRow(), 1).getValues();　 //F列の値を全て取得
+    const lastRow = values.filter(String).length;　　//空白の要素を除いた長さを取得
+    return lastRow;
 }
