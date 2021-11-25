@@ -67,12 +67,47 @@ function testDoGet(queries) {
         i++
     }
 
-    var options = {
+    const options = {
         "method": "GET",
+        "followRedirects": true,
+        "muteHttpExceptions" : true
+    };
+
+    const response = UrlFetchApp.fetch(url, options);
+    return {"url": url, "response": response};
+}
+
+
+/**
+ * doPostをテストする関数
+ * @param {Object} payload POSTリクエストの際に送信したいデータ
+ * @param {Object} queries POSTリクエストの際に送信したいクエリパラメーター
+ * @returns {Object} リクエストのレスポンス
+ */
+ function testDoPost(payload, queries={}) {
+
+    let url = ScriptApp.getService().getUrl();
+
+    let i = 1;
+    for (const key in queries) {
+        let query;
+        if (i === 1) {
+            query = `?${key}=${queries[key]}`;
+        } else {
+            query = `&${key}=${queries[key]}`;
+        }
+        url += query;
+        i++
+    }
+
+    const options = {
+        "method": "POST",
+        "muteHttpExceptions" : true,
+        "payload" : JSON.stringify(payload),
         "followRedirects": true,
     };
 
-    var response = UrlFetchApp.fetch(url, options);
+    const response = UrlFetchApp.fetch(url, options);
     return {"url": url, "response": response};
 }
 
