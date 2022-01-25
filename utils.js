@@ -9,7 +9,9 @@
  * @param {Array<Array<any>>} array 二次元配列
  * @returns {Array<Array<any>>} 転置された二次元配列
  */
-function transpose(array) { return array[0].map((_, c) => array.map(r => r[c])) };
+function transpose(array) { 
+    return array[0].map( (_, c) => array.map(r => r[c]) );
+};
 
 
 /**
@@ -17,11 +19,8 @@ function transpose(array) { return array[0].map((_, c) => array.map(r => r[c])) 
  * @param {Object} error エラーオブジェクト 
  * @returns {String} エラー詳細の文字列
  */
-function printError(error){
-    return "[名前] " + error.name + "\n" +
-        "[場所] " + error.fileName + "(" + error.lineNumber + "行目)\n" +
-        "[メッセージ]" + error.message + "\n" +      
-        "[StackTrace]\n" + error.stack;
+function printError(error) {
+    return error.stack;
 }
 
 
@@ -51,7 +50,7 @@ function logWrapper(fn, logLevel='log', ...args) {
  * @param {Object} queries GETリクエストの際に送信したいクエリパラメーター
  * @returns {Object} リクエストのレスポンス
  */
-function testDoGet(queries) {
+function testDoGet(queries={}) {
 
     let url = ScriptApp.getService().getUrl();
 
@@ -114,12 +113,12 @@ function testDoGet(queries) {
 
 /**
  * データが入っている要素の最終行を取得（空白処理をスルーする）
- * @param {Object} sheet SpreadsheetAppで取得されるSheetクラス
+ * @param {Object} sheet SpreadsheetAppで取得されるSheetオブジェクト
  * @param {Number} column sheetで最終行を取得したい行の行番号
  * @returns 空白を除いた最終行
  */
 function getLastRow(sheet, column) {
-    const values = sheet.getRange(1, column, sheet.getLastRow(), 1).getValues();　 //F列の値を全て取得
-    const lastRow = values.filter(String).length;　　//空白の要素を除いた長さを取得
+    const values = sheet.getRange(1, column, sheet.getLastRow(), 1).getValues(); //F列の値を全て取得
+    const lastRow = values.filter(String).length; //空白の要素を除いた長さを取得
     return lastRow;
 }
