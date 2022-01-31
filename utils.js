@@ -34,7 +34,7 @@ function printError(error) {
  */
 function logWrapper(fn, logLevel='log', ...args) {
     console[logLevel]( {function: fn.name, arguments: args, status: 'run'} );
-    try{ 
+    try { 
         const result = fn.apply(this, args);
         console[logLevel]( {function: fn.name, status: 'success', result: result} );
         return result;
